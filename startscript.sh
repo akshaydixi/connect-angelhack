@@ -2,8 +2,7 @@
 
 # Invoke the Forever module ( to START our nodejs server)
 ./node_modules/forever/bin/forever \
-	start \
+	start hello.js \
 	-al forever.log \
-	-ao out.log \ 
-	-ae err.log \
+	-ao output.log \
 	hello.js
