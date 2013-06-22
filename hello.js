@@ -14,11 +14,7 @@ app.get('/',function(req,res){
     res.sendfile(__dirname + '/index.html');
     });
 
-app.get('/*',function(req,res,next){
-    var file = req.params[0];
-    if (verbose) console.log('\t :: Express :: fole requested : '+file);
-    res.sendfile(__dirname + '/' + file )
-});
+
 
 
 //Socket IO Stuff
