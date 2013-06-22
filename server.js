@@ -5,6 +5,13 @@ var app = require('express')()
 var express = require('express');
 var UUID = require('node-uuid');
 var verbose = false;
+var Player = require('./Player').Player;
+var util = require('util');
+var players;
+
+
+
+
 server.listen(8080);
 console.log('\t Express listening on '+gameport);
 

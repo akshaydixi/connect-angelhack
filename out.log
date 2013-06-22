@@ -1,0 +1,4 @@
+info: socket.io started
+	 Express listening on 8080
+	 socket.io :: player d5c11817-aa9d-4bcf-865a-b9f25d48351bconnected
+	 socket.io :: client disconnected d5c11817-aa9d-4bcf-865a-b9f25d48351b

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./node_modules/forever/bin/forever start -al forever.log -ao out.log -ae err.log
+./node_modules/forever/bin/forever start -al forever.log -ao out.log -ae err.log server.js
