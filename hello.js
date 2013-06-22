@@ -8,7 +8,7 @@ var app = express.createServer();
 app.listen( gameport );
 console.log('\t :: Express :: Listening on port' + gameport );
 app.get('/',function(req,res){
-    res.sendfile(__dirname + '/simple.html');
+    res.sendfile(__dirname + '/index.html');
     });
 
 app.get('/*',function(req,res,next){
