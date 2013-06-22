@@ -1,4 +1,4 @@
-var gameport = process.env.PORT || 4004;
+var gameport = process.env.PORT || 8080;
 var io = require('socket.io');
 var express = require('express');
 var UUID = require('node-uuid');
@@ -33,7 +33,7 @@ sio.sockets.on('connection',function(client){
     client.emit('onconnected', {id: client.userid});
     console.log ( "\t socket.io :: player " + client.userid + " connected");
     client.on('disconnect',function(){
-        console.log('\t socket.io :: player ' + client.userid + 'disconnected:(';
+        console.log('\t socket.io :: player ' + client.userid + 'disconnected:(');
     });
 }); 
 
