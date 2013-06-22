@@ -2,7 +2,7 @@ var Player = function(creator,guess,answer){
 	var _creator = creator;
 	var _guess = guess;
 	var _answer = answer;
-	var id;
+	var id,easyid;
 
 var getIsCreator = function(){
 	return _creator;
@@ -19,8 +19,9 @@ var getAnswer = function(){
 return {
 	getIsCreator:getIsCreator,
 	getGuess:getGuess,
-	getAnswer:getAnswer
-	id:id
+	getAnswer:getAnswer,
+	id:id,
+	easyid:easyid
 	}
 };
 exports.Player = Player;

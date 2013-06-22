@@ -9,37 +9,70 @@ var Player = require('./Player').Player;
 var util = require('util');
 var players;
 
+function init(){
+	players = [];
+	setEventHandlers();
+}
 
+function playerById(id){
+	var i;
+	for(i=0;i<players.length;i++){
+		if(players[i].id==id)
+			return players[i];
+	};
+	return false;
+}
 
+var setEventHandlers = function(){
+	io.sockets.on('connection',onSocketConnection);
+}
 
-server.listen(8080);
-console.log('\t Express listening on '+gameport);
-
-app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/index.html');
+function onSocketConnection(client){
+	client.on('disconnect',onClientDisconnect);
+	client.on('newPlayer',onNewPlayer);
+	//TODO : ADD more stuff!!
 });
 
+function onClientDisconnect(){
+	util.log("Player has disconnected: "+this.id);
+	var removePlayer = playerByID(this.id);
+	if(!removePlayer){
+		util.log("ERROR : Player to remove not found");
+		return;
+	}
+	players.splice(players.indexOf(removePlayer),1);
+	this.broadcast.emit("remove player",{id:this.id});
+};
 
-app.get('/*',function(req,res){
-  var file = req.params[0];
-  if (verbose) console.log('\t Express requested for ' + file);
-  
-});
-
+function onNewPlayer(data){
+	util.log("New player has connected : "+(players.length+1));
+	var newPlayer = newPlayer(data.creator,data.guess,data.answer);
+	newPlayer.id = UUID();
+	newPlayer.arrID = players.length + 1;
+	if(playerByID(this.id)){
+		return;
+	}
+	
+	this.broadcast.emit('new player',{id:newPlayer.id,name:newPlayer.easyid,guess:newPlayer.getGuess(),creator:newPlayer.getIsCreator(),answer:newPlayer.getAnswer()});
+	var i,existingPlayer;
+	util.log("Current players: ");
+	util.log(newPlayer.easyid);
+	for(i=0;i<players.length;i++){
+		existingPlayer = players[i];
+		util.log(existingPlayer.easyid);
+		this.emit('new player',{id:exitingPlayer.id,name:existingPlayer.easyid,guess:existingPlayer.getGuess(),creator:existingPlayer.getIsCreator(),answer:existingPlayer.getAnswer()});
+	}
+	players.push(newPlayer);
+	util.log("there are now " + players.length + "clients connected");
+};
+	
 io.configure(function(){
-	io.set('log level',0);
+	io.set('log level',3);
+	io.set('transports',["websocket"]);
 	io.set('authorization', function(handshakeData,callback){
 	callback(null,true);
 	});
 });
 
-
-io.sockets.on('connection', function (socket) {
-	socket.userid = UUID();
-	socket.emit('connected',{id: socket.userid});
-	console.log('\t socket.io :: player '+ socket.userid + 'connected');
-	socket.on('disconnect',function(){
-		console.log('\t socket.io :: client disconnected ' + socket.userid);
-});
-});
-
+server.listen(gameport);
+init();
