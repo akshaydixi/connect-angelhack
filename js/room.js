@@ -19,16 +19,6 @@ Room.prototype.removePlayer = function(player){
 	this.players.remove(playerIndex);
 };
 
-Room.prototype.chooseCreator = function(){
-	var playerIndex = 0;
-	while(true){
-	playerIndex = Math.floor((Math.random()*this.players.length));
-	if(playerIndex == this.currentCreatorId) continue;
-	break;}
-	this.currentCreatorId = playerIndex;
-	return this.players[playerIndex];
-};
-
 Room.prototype.getPlayer = function(playerId){
 	var player = null;
 	for(var i = 0;i<players.length;i++){
