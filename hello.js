@@ -1,9 +1,12 @@
 var gameport = process.env.PORT || 8080;
-var io = require('socket.io');
+var http = require('http');
 var express = require('express');
+var app = express();
+var server = http.createServer(app);
+var io = require('socket.io');
 var UUID = require('node-uuid');
 var verbose = false;
-var app = express.createServer();
+
 
 app.listen( gameport );
 console.log('\t :: Express :: Listening on port' + gameport );
@@ -19,7 +22,7 @@ app.get('/*',function(req,res,next){
 
 
 //Socket IO Stuff
-var sio = io.listen(app);
+var sio = io.listen(server);
 
 sio.configure(function(){
     sio.set('log level',0);
