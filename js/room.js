@@ -1,6 +1,7 @@
 function Room(name){
 	this.players=[];
 	this.name = name;
+	this.currentCreatorId = -1;
 };
 
 Room.prototype.addPlayer = function(player){
@@ -18,19 +19,14 @@ Room.prototype.removePlayer = function(player){
 	this.players.remove(playerIndex);
 };
 
-
-Room.prototype.chooseCreator = function(oldCreator){
-	var playerIndex = -1;
-	for(var i = 0; i<this.players.length; i++){
-		if(this.players[i].id == oldCreator.id){
-			playerIndex= i;
-			break;
-		}
-	}
-	if (playerIndex == players.length - 1){
-		playerIndex = 0;}
-	else{
-		playerIndex = playerIndex+1;}
+Room.prototype.chooseCreator = function(){
+	var playerIndex = 0;
+	while(true){
+	playerIndex = Math.floor((Math.random()*this.players.length));
+	if(playerIndex == this.currentCreatorId) continue;
+	break;}
+	this.currentCreatorId = playerIndex;
+	return this.players[playerIndex];
 };
 
 Room.prototype.getPlayer = function(playerId){
