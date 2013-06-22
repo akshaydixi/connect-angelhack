@@ -16,3 +16,25 @@ app.get('/*',function(req,res,next){
     if (verbose) console.log('\t :: Express :: fole requested : '+file);
     res.sendfile(__dirname + '/' + file )
 });
+
+
+//Socket IO Stuff
+var sio = io.listen(app);
+
+sio.configure(function(){
+    sio.set('log level',0);
+    sio.set('authorization',function(handshakeData,callback){
+        callback(null,true);
+    });
+});
+
+sio.sockets.on('connection',function(client){
+    client.userid = UUID();
+    client.emit('onconnected', {id: client.userid});
+    console.log ( "\t socket.io :: player " + client.userid + " connected");
+    client.on('disconnect',function(){
+        console.log('\t socket.io :: player ' + client.userid + 'disconnected:(';
+    });
+}); 
+
+
