@@ -14,7 +14,7 @@ function init(){
 	setEventHandlers();
 }
 
-function playerById(id){
+var  playerById = function(id){
 	var i;
 	for(i=0;i<players.length;i++){
 		if(players[i].id==id)
@@ -31,11 +31,11 @@ function onSocketConnection(client){
 	client.on('disconnect',onClientDisconnect);
 	client.on('newPlayer',onNewPlayer);
 	//TODO : ADD more stuff!!
-});
+};
 
 function onClientDisconnect(){
 	util.log("Player has disconnected: "+this.id);
-	var removePlayer = playerByID(this.id);
+	var removePlayer = playerById(this.id);
 	if(!removePlayer){
 		util.log("ERROR : Player to remove not found");
 		return;
@@ -76,3 +76,7 @@ io.configure(function(){
 
 server.listen(gameport);
 init();
+
+app.get('/',function(req,res){
+	res.sendfile(__dirname + '/index.html');
+});
