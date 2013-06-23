@@ -7,7 +7,7 @@ function Game(){
 	// would require more data structures!	
 };
 
-Game.prototype.startGame = function(utility,io){
+Game.prototype.startGame = function(utility,io,connect){
 	var stopwatch = new Stopwatch();
 	var gameObject = this;
 	//Game logic set
